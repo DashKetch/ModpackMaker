@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="dashketch.apps.modpackmaker.controller.MainController">
+    <top>
+        <HBox spacing="10">
+            <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+            <TextField fx:id="projectNameField" promptText="Project Name"/>
+            <ComboBox fx:id="mcVersionBox" prefWidth="100"/>
+            <ComboBox fx:id="loaderBox" prefWidth="100"/>
+            <Button fx:id="createBtn" text="Create Project" onAction="#onCreateProject"/>
+        </HBox>
+    </top>
+
+    <center>
+        <VBox spacing="10">
+            <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+            <HBox spacing="10">
+                <TextField fx:id="searchField" promptText="Search Mods..." HBox.hgrow="ALWAYS"/>
+                <Button text="Search" onAction="#onSearch"/>
+            </HBox>
+            <ListView fx:id="resultList" VBox.vgrow="ALWAYS"/>
+            <Button text="Install Selected Mod" maxWidth="Infinity" onAction="#onInstall"/>
+        </VBox>
+    </center>
+
+    <bottom>
+        <TextArea fx:id="logArea" prefHeight="100" editable="false"/>
+    </bottom>
+</BorderPane>
