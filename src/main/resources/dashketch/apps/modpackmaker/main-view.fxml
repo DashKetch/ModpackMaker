@@ -6,28 +6,66 @@
 
 <BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="dashketch.apps.modpackmaker.controller.MainController">
     <top>
-        <HBox spacing="10">
+        <VBox spacing="5">
             <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
-            <TextField fx:id="projectNameField" promptText="Project Name"/>
-            <ComboBox fx:id="mcVersionBox" prefWidth="100"/>
-            <ComboBox fx:id="loaderBox" prefWidth="100"/>
-            <Button fx:id="createBtn" text="Create Project" onAction="#onCreateProject"/>
-        </HBox>
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <TextField fx:id="projectNameField" promptText="Project Name"/>
+                <ComboBox fx:id="mcVersionBox" prefWidth="120" promptText="MC Version"/>
+                <ComboBox fx:id="loaderBox" prefWidth="100"/>
+                <Button text="Create Project" onAction="#onCreateProject" style="-fx-base: #4a90e2;"/>
+                <Button text="Open Project" onAction="#onOpenProject"/>
+                <Separator orientation="VERTICAL" />
+                <Button text="Export (.zip)" onAction="#onExport" style="-fx-base: #2ecc71;"/>
+            </HBox>
+        </VBox>
     </top>
 
     <center>
-        <VBox spacing="10">
-            <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
-            <HBox spacing="10">
-                <TextField fx:id="searchField" promptText="Search Mods..." HBox.hgrow="ALWAYS"/>
-                <Button text="Search" onAction="#onSearch"/>
-            </HBox>
-            <ListView fx:id="resultList" VBox.vgrow="ALWAYS"/>
-            <Button text="Install Selected Mod" maxWidth="Infinity" onAction="#onInstall"/>
-        </VBox>
+        <TabPane fx:id="mainTabPane" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab text="Mod Browser">
+                    <content>
+                        <VBox spacing="10">
+                            <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+                            <HBox spacing="10">
+                                <TextField fx:id="searchField" promptText="Search Modrinth for mods..." HBox.hgrow="ALWAYS" onAction="#onSearch"/>
+                                <Button text="Search" onAction="#onSearch"/>
+                                <Button text="View Installed" onAction="#onViewInstalled" style="-fx-base: #f39c12;"/>
+                            </HBox>
+                            <ListView fx:id="resultList" VBox.vgrow="ALWAYS"/>
+                            <HBox spacing="10">
+                                <Button text="Install Selected Mod" HBox.hgrow="ALWAYS" maxWidth="Infinity" onAction="#onInstall" style="-fx-base: #34495e; -fx-text-fill: white;"/>
+                                <Button text="Remove Selected" onAction="#onRemoveMod" style="-fx-base: #e74c3c; -fx-text-fill: white;"/>
+                            </HBox>
+                        </VBox>
+                    </content>
+                </Tab>
+
+                <Tab text="Quest Editor">
+                    <content>
+                        <VBox>
+                            <ToolBar>
+                                <Button text="Load/Refresh Quests" onAction="#testQuestRender"/>
+                                <Label text=" Use Mouse Wheel to Zoom | Drag nodes to move" style="-fx-text-fill: #888;"/>
+                            </ToolBar>
+                            <ScrollPane pannable="true" fitToHeight="true" fitToWidth="true" VBox.vgrow="ALWAYS" style="-fx-background: #1e1e1e;">
+                                <content>
+                                    <Pane fx:id="questCanvas" prefHeight="2000" prefWidth="2000" style="-fx-background-color: #2b2b2b;">
+                                    </Pane>
+                                </content>
+                            </ScrollPane>
+                        </VBox>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
     </center>
 
     <bottom>
-        <TextArea fx:id="logArea" prefHeight="100" editable="false"/>
+        <VBox>
+            <Separator />
+            <TextArea fx:id="logArea" prefHeight="120" editable="false"
+                      style="-fx-control-inner-background: #000; -fx-text-fill: #00ff00; -fx-font-family: 'Consolas'; "/>
+        </VBox>
     </bottom>
 </BorderPane>

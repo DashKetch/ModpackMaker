@@ -23,12 +23,19 @@ public class ModrinthAPI {
 
     // 1. Search for Mods
     public JsonArray searchMods(String query, String mcVersion, String loader) throws IOException {
-        String facets = String.format("[[\"versions:%s\"],[\"categories:%s\"]]", mcVersion, loader);
+        String facets = String.format(
+                "[[\"versions:%s\"],[\"categories:%s\"],[\"project_type:mod\"]]",
+                mcVersion,
+                loader.toLowerCase()
+        );
+
         String encodedFacets = URLEncoder.encode(facets, StandardCharsets.UTF_8);
+        String url = BASE_URL + "/search?query=" + query + "&facets=" + encodedFacets + "&limit=500";
 
-        String url = BASE_URL + "/search?query=" + query + "&facets=" + encodedFacets;
-
-        Request request = new Request.Builder().url(url).header("User-Agent", USER_AGENT).build();
+        Request request = new Request.Builder()
+                .url(url)
+                .header("User-Agent", USER_AGENT)
+                .build();
 
         try (Response response = client.newCall(request).execute()) {
             if (!response.isSuccessful()) throw new IOException("Search failed: " + response.code());
